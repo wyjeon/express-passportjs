@@ -24,6 +24,14 @@ app.use(
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy;
 
+app.post(
+  "/auth/login_process",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/auth/login",
+  })
+);
+
 app.get("*", function (request, response, next) {
   fs.readdir("./data", function (error, filelist) {
     request.list = filelist;
