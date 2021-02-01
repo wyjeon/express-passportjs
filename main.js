@@ -24,6 +24,32 @@ app.use(
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy;
 
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "pwd",
+    },
+    function (username, password, done) {
+      console.log("LocalStategy", username, password);
+      /*
+    User.findOne({ username: username }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username." });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: "Incorrect password." });
+      }
+      return done(null, user);
+    });
+    */
+    }
+  )
+);
+
 app.post(
   "/auth/login_process",
   passport.authenticate("local", {
